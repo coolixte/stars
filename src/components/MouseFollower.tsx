@@ -6,6 +6,7 @@ const MouseFollower = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     // Check if the device is mobile or tablet
@@ -18,7 +19,20 @@ const MouseFollower = () => {
       );
     };
 
+    // Check for dark mode
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    };
+
     checkDevice();
+    checkDarkMode();
+
+    // Listen for theme changes
+    const handleThemeChange = (e: CustomEvent) => {
+      setIsDarkMode(e.detail.isDarkMode);
+    };
+
+    window.addEventListener('themeChanged', handleThemeChange as EventListener);
 
     // If it's a mobile device, don't initialize the mouse follower
     if (isMobileOrTablet) return;
@@ -59,6 +73,7 @@ const MouseFollower = () => {
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('themeChanged', handleThemeChange as EventListener);
     };
   }, [isVisible, isMobileOrTablet]);
 
@@ -69,32 +84,20 @@ const MouseFollower = () => {
     <>
       {/* Large circle - follows with lag */}
       <div
-        className={`fixed pointer-events-none z-50 rounded-full mix-blend-difference transition-opacity duration-300 ${
+        className={`fixed pointer-events-none z-50 rounded-full transition-opacity duration-300 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
           width: isClicking ? '18px' : '24px',
           height: isClicking ? '18px' : '24px',
-          backgroundColor: 'white', 
+          backgroundColor: isDarkMode ? 'rgb(22, 163, 74)' : 'white', // Exact green color from stars in dark mode
           transform: `translate(${position.x - (isClicking ? 9 : 12)}px, ${
             position.y - (isClicking ? 9 : 12)
           }px)`,
           transition: isClicking
             ? 'width 0.15s, height 0.15s, transform 0.05s'
-            : 'width 0.15s, height 0.15s, transform 0.1s ease-out'
-        }}
-      />
-      
-      {/* Small dot - follows cursor exactly */}
-      <div
-        className={`fixed pointer-events-none z-50 rounded-full mix-blend-difference transition-opacity duration-300 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          width: '4px',
-          height: '4px',
-          backgroundColor: 'white',
-          transform: `translate(${position.x - 2}px, ${position.y - 2}px)`,
+            : 'width 0.15s, height 0.15s, transform 0.1s ease-out',
+          mixBlendMode: isDarkMode ? 'normal' : 'difference'
         }}
       />
     </>

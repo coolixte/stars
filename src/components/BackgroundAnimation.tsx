@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 // Configurable parameters
 const DEFAULT_CONFIG = {
   // Star count and appearance
-  totalStarCount: 150, // Base number of stars
+  totalStarCount: 90, // Base number of stars
   minStarSize: 1, // Minimum star size in pixels
   maxStarSize: 6.5, // Maximum star size in pixels
   minStarOpacity: 0.2, // Minimum star opacity (0-1)

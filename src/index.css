@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Use system Consolas font */
+@font-face {
+  font-family: 'Consolas';
+  src: local('Consolas');
+  font-display: swap;
+}
  
 @layer base {
   :root {
@@ -55,6 +62,12 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Consolas', monospace;
+  }
+  
+  /* Apply Consolas to all text elements */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
+    font-family: 'Consolas', monospace;
   }
 }
 
