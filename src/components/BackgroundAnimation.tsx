@@ -11,8 +11,8 @@ const DEFAULT_CONFIG = {
 
   // Star movement
   baseMovementSpeed: 0.3, // Base speed for autonomous movement (pixels per frame)
-  minMovementSpeed: 0.1, // Minimum movement speed
-  maxMovementSpeed: 0.5, // Maximum movement speed
+  minMovementSpeed: 0.25, // Minimum movement speed
+  maxMovementSpeed: 0.65, // Maximum movement speed
   directionChangeChance: 0.008, // Chance of random direction change (0-1)
   directionChangeStrength: 0.5, // How strongly direction changes (0-1)
   pushRecoveryRate: 0.98, // How quickly stars recover from being pushed (lower = longer glide)

@@ -56,7 +56,7 @@ const Stars = () => {
 
   // Set title
   useEffect(() => {
-    document.title = "Play with the Stars";
+    document.title = "STARS ⸱ CALIXTE LAMOTTE";
   }, []);
 
   return (
@@ -64,6 +64,18 @@ const Stars = () => {
       <BackgroundAnimation customSettings={starSettings} />
       <MouseFollower />
       <Navbar />
+      
+      {/* Footer text */}
+      <div className="fixed bottom-4 left-0 right-0 text-center z-10">
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className={`text-xs font-light ${isDarkMode ? 'text-green-600' : 'text-black'}`}
+        >
+          2025 ⸱ @Calixte Lamotte
+        </motion.p>
+      </div>
     </div>
   );
 };
