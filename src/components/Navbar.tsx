@@ -62,7 +62,10 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.3 }}
-        className="fixed top-4 left-0 right-0 z-50 px-4 md:px-8 py-4 transition-all duration-300 mx-auto max-w-[360px] rounded-xl bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-md dark:shadow-[0_4px_12px_rgba(255,255,255,0.1)] border border-black dark:border-white"
+        className={`fixed top-4 left-0 right-0 z-50 px-4 md:px-8 py-4 transition-all duration-300 mx-auto w-[360px] rounded-xl bg-white/80 dark:bg-black/80 backdrop-blur-md border border-black dark:border-white
+          ${isDarkMode 
+            ? 'shadow-[0_8px_16px_rgba(22,163,74,0.25)]' 
+            : 'shadow-[0_8px_16px_rgba(0,0,0,0.15)]'}`}
       >
         <div className="flex justify-center items-center gap-4">
           {/* Settings Button */}

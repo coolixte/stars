@@ -80,9 +80,12 @@ const MouseFollower = () => {
   // If it's a mobile device, don't render anything
   if (isMobileOrTablet) return null;
 
+  // Define the color based on theme
+  const cursorColor = isDarkMode ? 'rgb(22, 163, 74)' : 'white';
+
   return (
     <>
-      {/* Large circle - follows with lag */}
+      {/* Circle outline with shadow - follows with lag */}
       <div
         className={`fixed pointer-events-none z-50 rounded-full transition-opacity duration-300 ${
           isVisible ? 'opacity-100' : 'opacity-0'
@@ -90,7 +93,9 @@ const MouseFollower = () => {
         style={{
           width: isClicking ? '18px' : '24px',
           height: isClicking ? '18px' : '24px',
-          backgroundColor: isDarkMode ? 'rgb(22, 163, 74)' : 'white', // Exact green color from stars in dark mode
+          border: `2px solid ${cursorColor}`,
+          backgroundColor: 'transparent',
+          boxShadow: `0 0 10px ${cursorColor}`,
           transform: `translate(${position.x - (isClicking ? 9 : 12)}px, ${
             position.y - (isClicking ? 9 : 12)
           }px)`,
