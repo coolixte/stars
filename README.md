@@ -7,18 +7,6 @@ Interactive stars background with customizable settings. This project provides a
 - Theme toggle (dark/light mode)
 - Extensive settings panel to customize the star behavior
 
-## Features
-
-- Interactive stars that respond to mouse movement
-- Custom cursor effect
-- Connections between nearby stars that create a network-like effect
-- Easy theme switching between dark and light modes
-- Fully customizable settings:
-  - Star count, size, and opacity
-  - Movement speed and behavior
-  - Connection distance and appearance
-  - Cursor effect radius and power
-
 ## Getting Started
 
 ### Prerequisites
@@ -73,11 +61,7 @@ yarn build
 
 The build artifacts will be located in the `dist/` directory.
 
-## License
+## License ⸱ Acknowledgments
 
-This project is open source and available for personal and commercial use.
-
-## Acknowledgments
-
-- Inspired by various interactive background animations
-- Built with React, TypeScript, and Tailwind CSS
+This project is open source and available for personal use.
+@ Calixte Lamotte ⸱ 2025
