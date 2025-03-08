@@ -1,5 +1,7 @@
 # Stars
 
+Available (here)[https://stars.calixtelamotte.com/]
+
 Interactive stars background with customizable settings. This project provides a beautiful animated star field with interactive features:
 
 - Responsive star animation that reacts to cursor movement

@@ -87,6 +87,8 @@ interface Particle {
   targetX?: number;
   targetY?: number;
   glideDistance?: number;
+  underCursorInfluence?: boolean;
+  cursorVelocityMagnitude?: number;
 }
 
 // Define the type for our config
@@ -237,6 +239,8 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
       speed: speed, // Store the base speed for reference
       angle: angle, // Store the angle for reference
       opacity,
+      underCursorInfluence: false,
+      cursorVelocityMagnitude: 0,
     };
   };
 
@@ -461,6 +465,9 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
       for (let i = 0; i < particleCount; i++) {
         const p = particles.current[i];
         
+        // Reset cursor influence flag at the start of each frame
+        p.underCursorInfluence = false;
+        
         // Apply cursor effect (push away from cursor)
         if (mouseX >= 0 && mouseY >= 0) {
           dx = p.x - mouseX;
@@ -468,6 +475,9 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
           distance = Math.sqrt(dx * dx + dy * dy);
           
           if (distance < effectRadius) {
+            // Mark as under cursor influence
+            p.underCursorInfluence = true;
+            
             // Calculate push force (stronger closer to cursor)
             pushForce = (1 - distance / effectRadius) * CONFIG.current.cursorEffectPower;
             pushAngle = Math.atan2(dy, dx);
@@ -475,6 +485,9 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
             // Add to velocity
             p.vx += Math.cos(pushAngle) * pushForce;
             p.vy += Math.sin(pushAngle) * pushForce;
+            
+            // Calculate and store the magnitude of cursor-induced velocity
+            p.cursorVelocityMagnitude = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
           }
         }
         
@@ -491,7 +504,9 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
         }
         
         // Random direction changes (for normal particles)
-        if (!p.isGliding && Math.random() < CONFIG.current.directionChangeChance) {
+        if (!p.underCursorInfluence && !p.isGliding && 
+            (!p.cursorVelocityMagnitude || p.cursorVelocityMagnitude < p.speed * 1.1) && 
+            Math.random() < CONFIG.current.directionChangeChance) {
           const randomAngle = Math.random() * Math.PI * 2;
           const changeStrength = CONFIG.current.directionChangeStrength;
           
@@ -510,11 +525,22 @@ const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ customSetting
           // Calculate current velocity magnitude
           const currentSpeed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
           
+          // Update cursor velocity magnitude
+          p.cursorVelocityMagnitude = currentSpeed > p.speed ? currentSpeed - p.speed : 0;
+          
           // Only apply recovery if moving faster than base speed
           if (currentSpeed > p.speed) {
             // Apply recovery factor toward base speed
             p.vx *= CONFIG.current.pushRecoveryRate;
             p.vy *= CONFIG.current.pushRecoveryRate;
+            
+            // If we're very close to base speed, normalize to exactly base speed
+            if (Math.abs(currentSpeed - p.speed) < 0.05) {
+              const normalizedAngle = Math.atan2(p.vy, p.vx);
+              p.vx = Math.cos(normalizedAngle) * p.speed;
+              p.vy = Math.sin(normalizedAngle) * p.speed;
+              p.cursorVelocityMagnitude = 0;
+            }
           }
         }
         
