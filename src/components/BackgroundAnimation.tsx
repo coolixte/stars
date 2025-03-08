@@ -5,7 +5,7 @@ const DEFAULT_CONFIG = {
   // Star count and appearance
   totalStarCount: 90, // Base number of stars
   minStarSize: 1, // Minimum star size in pixels
-  maxStarSize: 6.5, // Maximum star size in pixels
+  maxStarSize: 8.5, // Maximum star size in pixels
   minStarOpacity: 0.2, // Minimum star opacity (0-1)
   maxStarOpacity: 0.95, // Maximum star opacity (0-1)
 

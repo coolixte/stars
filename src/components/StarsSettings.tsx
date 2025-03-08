@@ -5,7 +5,7 @@ import { DEFAULT_VALUES, resetToDefaultValues } from './BackgroundAnimation'; //
 const SETTINGS_PARAMS = [
   { id: 'totalStarCount', name: 'Star Count', min: 50, max: 200, step: 10 },
   { id: 'minStarSize', name: 'Min Star Size', min: 0.5, max: 3, step: 0.1 },
-  { id: 'maxStarSize', name: 'Max Star Size', min: 1.5, max: 9, step: 0.1 },
+  { id: 'maxStarSize', name: 'Max Star Size', min: 1.5, max: 20, step: 0.1 },
   { id: 'minStarOpacity', name: 'Min Opacity', min: 0.1, max: 0.5, step: 0.05 },
   { id: 'maxStarOpacity', name: 'Max Opacity', min: 0.5, max: 1, step: 0.05 },
   { id: 'baseMovementSpeed', name: 'Base Speed', min: 0.1, max: 1, step: 0.05 },
